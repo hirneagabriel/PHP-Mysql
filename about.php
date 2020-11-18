@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Tema 1</title>
-</head>
+<?php require_once('config.php')?>
+<?php require_once(ROOT_PATH . '/includes/head_section.php') ?>
+ <title>About us</title>
+      </head>
 <body>
+<?php include(ROOT_PATH . '/includes/navbar.php') ?>
 
-<h2>Apilcatia web are ca tema un magazin online de electronice.</h1>
-<p>In aplicatia web doresc sa impementez un model simplu de magazin de electronice in care un utilizator sa poata accesa cu usurita produse din categoria dorita, sa poata alcatui un cos de cumparaturi si sa poata sa trimita o comanda</p>
+    <div class="grup">
+      <div class="box">
+          <h2>Aplicatia web are ca tema un magazin online de electronice.</h1>
+<p>In aplicatia web doresc sa implementez un model simplu de magazin de electronice in care un utilizator sa poata accesa cu usurita produse din categoria dorita, sa poata alcatui un cos de cumparaturi si sa poata sa trimita o comanda</p>
 <li>Din bara de navigatie vom putea alege : Home, Cont utilizator, Cos de cumparaturi, Cautare avansanta, About us </li>
 <li>In Home vom gasi cateva produse aflate la oferta din fiecare categorie, in partea din stanga se va gasi si o lista cu mai multe categorii de produse.</li>
 <li>La alegerea unei categorii vom fi redirectionati catre o pagina cu produse din categoria selectata. Vom putea sorta elementele categoriei dupa pret, denumire, vom putea adauga in cos.</li>
@@ -19,12 +21,11 @@
 <li>In About us vom avea detalii despre aplicatia web, inclusiv aceste informatii.</li>
 <h2>Baza de date</h2>
 <p>Baza de date pentru aplicatia web ar avea nevoie de 5 tabele:</p>
-<li>Utilizator(id_utilizator, username, password, nume ,prenume, telefon,mail,judet,oras,strada,numar,cod_postal,statut)</li>
-<li>Categorie(id_cat,nume)</li>
-<li>Produs(id_produs,id_cat,nume,descriere,pret,img)</li>
-<li>Comanda(id_comanda,id_utilizator,valoare,data,confirmare)</li>
-<li>Produs_comanda(id_comanda,id_produs,nr_produs)</li>
-
-
-</body>
-</html>
+<li>utilizator(#id_utilizator, username, password, nume, prenume, telefon, mail, judet, oras, strada, numar, cod_postal, statut, vkey, verificat, createdate)</li>
+<li>categorie(#id_cat, nume)</li>
+<li>Produs(#id_produs, id_cat, nume, descriere, pret, img, oferta)</li>
+<li>Comanda(#id_comanda, id_utilizator, valoare, data, confirmare)</li>
+<li>Produs_comanda(#id_comanda, #id_produs, nr_produs)</li>
+          </div>
+          
+<?php include(ROOT_PATH . '/includes/footer.php') ?>
