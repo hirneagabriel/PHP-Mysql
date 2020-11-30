@@ -25,4 +25,13 @@ function getProduse($id_cat)
     return $produse;
 }
 
+function getProdus($id_produs)
+{
+    global $mysqli;
+    $sql= "SELECT * FROM produs where id_produs=$id_produs";
+    $result=mysqli_query($mysqli,$sql);
+    $produs= mysqli_fetch_assoc($result);
+    return $produs;
+}
+
 ?>

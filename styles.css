@@ -125,7 +125,12 @@ tr:nth-child(even) {
   box-shadow:  1px 1px 5px grey;
   
   }
-
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+  }
 
 .coloana {
   

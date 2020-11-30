@@ -27,7 +27,7 @@ require_once('config.php')?>
            <img src="imagini/<?php echo $oferta['imagine']?>"  style="width:100%">
            <div class="container">
               <h3><?php echo $oferta['nume']?></h3> 
-                <p>pret: <?php echo $oferta['pret']?> lei</p> 
+                <p>pret: <?php echo $oferta['pret']?> RON</p> 
            </div>
         </div>
         </a>
