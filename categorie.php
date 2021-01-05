@@ -35,7 +35,7 @@ require_once('config.php')?>
             <div class="card">
            <img src="imagini/<?php echo $produs['imagine']?>"  style="width:100%">
            <div class="container">
-              <h3><?php echo $produs['nume']?></h3> 
+              <h4><?php echo $produs['nume']?></h4> 
                 <p>pret: <?php echo $produs['pret']?> RON</p> 
            </div>
         </div>

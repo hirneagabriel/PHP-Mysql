@@ -22,7 +22,7 @@ require_once('config.php')?>
       
  <div class= "main">
       <?php foreach ($oferte as $oferta): ?>
-        <a href="produs.php?id_cat=<?php echo $oferta['id_produs']?>">
+        <a href="produs.php?id_produs=<?php echo $oferta['id_produs']?>">
             <div class="card">
            <img src="imagini/<?php echo $oferta['imagine']?>"  style="width:100%">
            <div class="container">

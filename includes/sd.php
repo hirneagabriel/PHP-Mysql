@@ -9,9 +9,9 @@
         <?php
         if(isset($_SESSION['cart'])){
           $count = count($_SESSION['cart']);
-          echo "<span style=\"font-weight:bold; color:red;\">$count</span>";
+          echo "<span>$count</span>";
         }else{
-          echo "<span style=\"font-weight:bold; color:red;\" > 0 </span>";
+          echo "<span> 0 </span>";
         }
          ?></a>
         <a href="cautare.php">Cautare avansata</a>
