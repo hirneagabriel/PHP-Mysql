@@ -2,10 +2,22 @@
 session_start();
 require_once('config.php')?>
 <?php require_once( ROOT_PATH . '/includes/functions.php');
+$errors=array();
 if (isset($_POST['confirmare'])){
 $id_comanda = 1;
 $query = "SELECT id_comanda FROM comanda";
 $resursa = mysqli_query($mysqli, $query);
+foreach ($_SESSION['cart'] as $key => $value){
+    $sql= "SELECT * FROM produs where id_produs=$value[product_id]";
+    $result=mysqli_query($mysqli,$sql);
+    $produs= mysqli_fetch_assoc($result);
+    if($produs['stoc']<$value['count'])
+    {
+        array_push($errors, "Produsele numai sunt in stoc!");
+    }
+}
+    if(count($errors)==0)
+    {
 while ($row = mysqli_fetch_assoc($resursa)){
 if ($id_comanda == $row['id_comanda']) $id_comanda=$id_comanda+1;}
 $sql_comanda="INSERT INTO comanda (id_comanda,id_utilizator,valoare,data,confirmare) VALUES ('".$id_comanda."','".$_SESSION['userID']."','".$_SESSION['total']."', NOW() ,'0')";
@@ -13,10 +25,14 @@ $rez=mysqli_query($mysqli,$sql_comanda);
 foreach ($_SESSION['cart'] as $key => $value){
     $sql_produs_comanda="INSERT INTO produs_comanda (id_comanda,id_produs,nr_produse) VALUES ('".$id_comanda."','".$value["product_id"]."','".$value['count']."')";
     $rez= mysqli_query($mysqli, $sql_produs_comanda);
-}
+    $sql = "UPDATE produs SET stoc=stoc-$value[count] WHERE id_produs=$value[product_id]";
+    $rez= mysqli_query($mysqli, $sql);
+    }
+
 echo "<script>alert('Comanda a fost trimisa !')</script>";
 header('location:index.php');
 session_destroy();
+}
 }
 
 ?>
@@ -28,6 +44,13 @@ session_destroy();
 
     <div class="grup">
       <div class="box">
+      <?php if (count($errors) > 0) : ?>
+          <div>
+  	      <?php foreach ($errors as $error) : ?>
+  	        <p><?php echo $error ?></p>
+  	       <?php endforeach ?>
+             </div>
+                 <?php endif ?>
           <h3>Casa</h3>
           <?php
  if(isset($_SESSION['userID'])){

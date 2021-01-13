@@ -1,37 +1,11 @@
-<?php
-
-require_once('config.php')?>
-
+<?php require_once('../config.php');
+session_start()?>
 <?php
 $errors=array();
-
+if(!isset($_SESSION["adminID"])){
+    header('location:index.php');
+ }
 if(isset($_POST['submit'])){
-     function CheckCaptcha($userResponse) {
-        $fields_string = '';
-        $fields = array(
-            'secret' => '6LeVORAaAAAAALh8hExB9zCVyT3iihTrEJL4_Df2',
-            'response' => $userResponse
-        );
-        foreach($fields as $key=>$value)
-        $fields_string .= $key . '=' . $value . '&';
-        $fields_string = rtrim($fields_string, '&');
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, True);
-
-        $res = curl_exec($ch);
-        curl_close($ch);
-
-        return json_decode($res, true);
-    }
-     
-     $result = CheckCaptcha($_POST['g-recaptcha-response']);
-
-    if ($result['success']) {
-
     //get form data
     if(isset($_POST['u'])&&isset($_POST['p'])&&isset($_POST['p2'])&&isset($_POST['e'])&&isset($_POST['pr'])&&isset($_POST['n'])&&isset($_POST['t'])&&isset($_POST['j'])&&isset($_POST['o'])&&isset($_POST['s'])&&isset($_POST['nr'])&&isset($_POST['c']))
     {$u=$_POST['u'];
@@ -71,7 +45,7 @@ if(isset($_POST['submit'])){
         $s = mysqli_real_escape_string($mysqli,$s);
         $nr = mysqli_real_escape_string($mysqli,$nr);
         $c = mysqli_real_escape_string($mysqli,$c);
-        $st =1;
+        $st =0;
         $result = mysqli_query($mysqli,"SELECT * FROM utilizator WHERE username='$u' or mail='$e' LIMIT 1");
         $user=mysqli_fetch_assoc($result);
         if ($user) { 
@@ -84,29 +58,11 @@ if(isset($_POST['submit'])){
         }
         if(count($errors)==0)
         {
-        
-        //generete Vkey
-        $vkey=md5(time().$u);
-
         $pH=password_hash($p,PASSWORD_DEFAULT);
-        mysqli_query($mysqli,"INSERT into utilizator(username,password,nume,prenume,telefon,mail,judet,oras,strada,numar,cod_postal,statut,vkey)
-        VALUES('$u','$pH','$n','$pr','$t','$e','$j','$o','$s','$nr','$c','$st','$vkey')");
-        $to = $e;
-        $subject = "Email Verification";
-        $message = "<a href='https://ghphpproject.000webhostapp.com/verify.php?vkey=$vkey'>Inregistreaza-ti contul</a>";
-        $headers = "From: ghphpproject \r\n";
-        $headers .= "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        mail($to,$subject,$message,$headers);
-        header('location:thankyou.php');
-      
+        mysqli_query($mysqli,"INSERT into utilizator(username,password,nume,prenume,telefon,mail,judet,oras,strada,numar,cod_postal,statut,vkey,verificat)
+        VALUES('$u','$pH','$n','$pr','$t','$e','$j','$o','$s','$nr','$c','$st','-',1)");
+        header('location:admin.php');
         }
-    }
-    }
-	
-     else {
-    
-       echo '<script>alert("Va rugam confirmati ca nu sunteti un robot:)");</script>';
     }
 }
 
@@ -114,16 +70,23 @@ if(isset($_POST['submit'])){
 
 
 ?>
-<?php require_once(ROOT_PATH . '/includes/head_section.php') ?>
-<script src='https://www.google.com/recaptcha/api.js'></script>
- <title>Inregistrare</title>
+<?php require_once(ROOT_PATH . '/admin/includes/head_section.php') ?>
+ <title>Inregistrare cont nou administrator</title>
       </head>
 <body>
-<?php include(ROOT_PATH . '/includes/navbar.php') ?>
+<?php include(ROOT_PATH . '/admin/includes/navbar.php') ?>
 
     <div class="grup">
-      <div class="box">
-          <h3>Inregistrare</h3>
+    <div class="coloana">
+     <?php
+     if(isset($_SESSION['adminID'])){
+         echo '<a href="admin.php">Meniu principal</a>';
+     }
+     ?>
+</div>
+      
+ <div class= "main">
+          <h3>Creare cont admin</h3>
           <?php if (count($errors) > 0) : ?>
           <div>
   	      <?php foreach ($errors as $error) : ?>
@@ -179,14 +142,13 @@ if(isset($_POST['submit'])){
                 </tr>
                 <tr> 
                     <td align="right">Cod postal:</td>
-                    <td><input type="text" name="c" required/></td>
+                    <td><input type="test" name="c" required/></td>
                 </tr>
                 <tr>
-                 <td colspan="2" align="center"><input type="SUBMIT" name="submit" value="Inregistrare" required/></td>
+                 <td colspan="2" align="center"><input type="SUBMIT" name="submit" style="font-size:14px;" value="Inregistrare" required/></td>
                 </tr>
             </table>
-            <div class="g-recaptcha" align="center" style="padding: 10px;" data-sitekey="6LeVORAaAAAAABy44tWz96flzhczgVYv5gk03ZQ8"></div>
         </form>
           </div>
           
-<?php include(ROOT_PATH . '/includes/footer.php') ?>
+<?php include(ROOT_PATH . '/admin/includes/footer.php') ?>

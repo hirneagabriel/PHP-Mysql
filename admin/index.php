@@ -1,10 +1,10 @@
-<?php require_once('config.php')?>
+<?php 
+require_once('../config.php')?>
 <?php
 $errors=array();
 
 if(isset($_POST['submit'])){
-     
-     function CheckCaptcha($userResponse) {
+    function CheckCaptcha($userResponse) {
         $fields_string = '';
         $fields = array(
             'secret' => '6LeVORAaAAAAALh8hExB9zCVyT3iihTrEJL4_Df2',
@@ -29,12 +29,13 @@ if(isset($_POST['submit'])){
      $result = CheckCaptcha($_POST['g-recaptcha-response']);
 
     if ($result['success']) {
-        //get form data
+
+    //get form data
     $u=$_POST['u'];
     $p=$_POST['p'];
     $u = mysqli_real_escape_string($mysqli,$u);
     $p = mysqli_real_escape_string($mysqli,$p);
-   $result =  mysqli_query($mysqli,"SELECT * FROM utilizator WHERE username='$u'");
+   $result =  mysqli_query($mysqli,"SELECT * FROM utilizator WHERE username='$u' AND statut=0");
    $row_cnt =mysqli_num_rows($result);
  if($row_cnt!=0){
    $user=mysqli_fetch_assoc($result);
@@ -48,9 +49,9 @@ if(isset($_POST['submit'])){
     if($verified==1)
     {
      session_start();
-     $_SESSION['userID'] = $user['id_utilizator'];
-     $_SESSION['username'] = $user['username'];
-     header("Location: ../utilizator.php");
+     $_SESSION['adminID'] = $user['id_utilizator'];
+     $_SESSION['adminUsername'] = $user['username'];
+     header("Location: ../admin/admin.php");
     }else{
         array_push($errors, "Contul nu a fost inca verificat");
     }
@@ -60,21 +61,21 @@ if(isset($_POST['submit'])){
  else{
         array_push($errors, "Date invalide!");
      }
- }
+    }
 	
      else {
     
        echo '<script>alert("Va rugam confirmati ca nu sunteti un robot:)");</script>';
     }
-}
+ }
  
 ?>
-<?php require_once(ROOT_PATH . '/includes/head_section.php') ?>
+<?php require_once(ROOT_PATH . '/admin/includes/head_section.php') ?>
 <script src='https://www.google.com/recaptcha/api.js'></script>
  <title>Inregistrare</title>
       </head>
 <body>
-<?php include(ROOT_PATH . '/includes/navbar.php') ?>
+<?php include(ROOT_PATH . '/admin/includes/navbar.php') ?>
 
     <div class="grup">
       <div class="box">
@@ -104,4 +105,4 @@ if(isset($_POST['submit'])){
         </form>
           </div>
           
-<?php include(ROOT_PATH . '/includes/footer.php') ?>
+<?php include(ROOT_PATH . '/admin/includes/footer.php') ?>

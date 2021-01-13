@@ -2,7 +2,6 @@
 session_start();
 require_once('config.php')?>
 <?php require_once( ROOT_PATH . '/includes/functions.php') ?>
-
 <?php $categorii = getCategorii(); 
       if(isset($_GET['id_cat'])){
       $id_cat=$_GET['id_cat'];
@@ -35,7 +34,7 @@ require_once('config.php')?>
             <div class="card">
            <img src="imagini/<?php echo $produs['imagine']?>"  style="width:100%">
            <div class="container">
-              <h4><?php echo $produs['nume']?></h4> 
+              <h3><?php echo $produs['nume']?></h3> 
                 <p>pret: <?php echo $produs['pret']?> RON</p> 
            </div>
         </div>

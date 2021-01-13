@@ -11,6 +11,9 @@ require_once('config.php')?>
       }
       else{
       $produs = getprodus($id_produs);
+      if(!$produs){
+         header('location:index.php');
+      }
       }
       }
 ?>
@@ -68,9 +71,18 @@ if (isset($_POST['add'])){
               <h2 align="center"><?php echo $produs['nume']?></h2> 
               <h3> Descriere:</h3>
               <p><?php echo $produs['descriere']?></p>
-                <p align="center">pret: <?php echo $produs['pret']?> RON</p> 
-                <input type="SUBMIT" name="add" value="Adauga in cos" required/>
-                <input type='HIDDEN' name='product_id' value="<?php echo $produs['id_produs'] ?>">
+              <p>stoc <?php echo $produs['stoc']?> buc.</p>
+                <p align="center">pret: <?php echo $produs['pret']?> RON</p>
+                <?php
+                if($produs['stoc']!=0){
+                  echo '<input type="SUBMIT" name="add" value="Adauga in cos" required/>';
+                  echo '<input type=\'HIDDEN\' name=\'product_id\' value="'.$produs['id_produs'].'">';
+                }
+                else{
+                   echo '<p>Produsul nu este in stoc';
+                }
+                ?> 
+                
 </form>
  </div>
  

@@ -4,10 +4,6 @@
 body {
   font-family: 'Rubik', 'Abel', 'Source Serif Pro', 'Overpass', 'Cairo',sans-serif;
   margin:auto;
-  background-image: url(photo/photo3.jpg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
   max-width: 1000px;
 }
 
@@ -97,7 +93,6 @@ font-family: 'Cairo',sans-serif;
   font-size: 16px;
   text-align: justify;
   box-shadow: 1px 1px 5px grey;
-  min-height: 300px;
  
 }
 table{
@@ -178,10 +173,11 @@ font-family: 'Cairo',sans-serif;
 }
 .card {
 text-decoration: none;
+background-color: white;
 float:left;
 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 transition: 0.3s;
-width: 24%;
+width: 32.793%;
 margin: 2px;
 
 }
@@ -192,6 +188,7 @@ box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 
 .container {
 padding: 2px 5px;
+min-height: 150px;
 }
 
 @media screen and (max-width:1050px) {
@@ -202,6 +199,9 @@ padding: 2px 5px;
   .box{
     padding-left:10px;
     padding-right:10px;
+  }
+  .card {
+      width:32%;
   }
 }
 
@@ -214,6 +214,9 @@ padding: 2px 5px;
   body {
     padding-left: 20px;
     padding-right: 20px;
+  }
+  .card {
+     width: 32.75%;
   }
 }
 
@@ -245,6 +248,9 @@ padding: 2px 5px;
   }
   .textwrap{
     max-width: none;
+  }
+  .card {
+      width: 49%;
   }
  
 }
@@ -324,15 +330,7 @@ input[type=text] {
   margin: 8px 0;
   box-sizing: border-box;
 }
-input[type="checkbox"]{
-  width: 23px;
-  height: 23px;
-  padding: 0;
-  margin:0;
-  vertical-align: center;
-  position: relative;
-  top: 7px;
-}
+
 input[type=password] {
   width: 50%;
   padding: 5px 15px;
@@ -350,6 +348,10 @@ input[type=submit] {
   border-radius: 4px;
   cursor: pointer;
 }
+a:link, a:visited {
+  text-decoration: none;
+}
+
 .current {
   background-color:rgb(204, 204, 204); 
 }

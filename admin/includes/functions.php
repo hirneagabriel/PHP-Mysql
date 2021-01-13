@@ -24,6 +24,14 @@ function getProduse($id_cat)
     $produse= mysqli_fetch_all($result,MYSQLI_ASSOC);
     return $produse;
 }
+function getAllProduse()
+{
+  global $mysqli;
+    $sql= "SELECT * FROM produs";
+    $result=mysqli_query($mysqli,$sql);
+    $produse= mysqli_fetch_all($result,MYSQLI_ASSOC);
+    return $produse;
+}
 
 function getProdus($id_produs)
 {
@@ -33,16 +41,41 @@ function getProdus($id_produs)
     $produs= mysqli_fetch_assoc($result);
     return $produs;
 }
-
-function getComenzi($utilizator)
+function getComanda($id_comanda)
 {
   global $mysqli;
-  $sql= "SELECT * FROM comanda where id_utilizator=$utilizator";
+  $sql= "SELECT * FROM comanda where id_comanda=$id_comanda";
+    $result=mysqli_query($mysqli,$sql);
+    $comanda= mysqli_fetch_assoc($result);
+    return $comanda;
+}
+
+function getProduseComanda($id_comanda)
+{
+  global $mysqli;
+  $sql= "SELECT * FROM produs_comanda where id_comanda=$id_comanda";
+  $result=mysqli_query($mysqli,$sql);
+  $produse= mysqli_fetch_all($result,MYSQLI_ASSOC);
+  return $produse;
+}
+
+function getUserComanda($id_utilizator)
+{
+  global $mysqli;
+  $sql= "SELECT * FROM utilizator where id_utilizator=$id_utilizator";
+  $result=mysqli_query($mysqli,$sql);
+  $user= mysqli_fetch_assoc($result);
+  return $user;
+}
+function getComenzi()
+{
+  global $mysqli;
+  $sql= "SELECT * FROM comanda";
     $result=mysqli_query($mysqli,$sql);
     $comenzi= mysqli_fetch_all($result,MYSQLI_ASSOC);
     return $comenzi;
 }
-function elementeCos($productimg,$productname,$productprice,$productid,$cantitatea,$stoc){
+function elementeCos($productimg,$productname,$productprice,$productid,$cantitatea){
     $sum=$productprice*$cantitatea;
     $element="
     <form action=\"cos.php?id=$productid\" method=\"post\">
@@ -55,14 +88,12 @@ function elementeCos($productimg,$productname,$productprice,$productid,$cantitat
         <p>$productprice RON</p>
       </div>
       <div class=\"col col-qty layout-inline\">
-      <p>$cantitatea buc.</p>
       <form action=\"\" method=\"post\">
-      <select id=\"count\" name=\"cantitate\">";
-     
-      for ($i = 1; $i <= $stoc; $i++) {
-        $element.= "<option value='$i'>$i</option>";
-    }
-    $element.="
+      <select id=\"count\" name=\"cantitate\">
+      <option value=\"1\">1</option>
+      <option value=\"2\">2</option>
+      <option value=\"3\">3</option>
+      <option value=\"4\">4</option>
       </select>
       <input type=\"submit\" name=\"update\" value=\"Update\">
       </form>
@@ -106,29 +137,59 @@ function dateComanda($user){
   echo $element;
 }
 
+
 function dateCom($comanda){
   global $mysqli;
   $sql= "SELECT * FROM utilizator where id_utilizator=$comanda[id_utilizator]";
   $result=mysqli_query($mysqli,$sql);
   $user= mysqli_fetch_assoc($result);
   $element="
-  
+  <form action=\"comanda.php?id=$comanda[id_comanda]\" method=\"post\">
   <tr>
     <td>$user[nume] $user[prenume]</td>
     <td>$user[telefon]</td>
     <td>$user[mail]</td>
     <td>Strada $user[strada] nr. $user[numar] $user[oras], $user[judet], $user[cod_postal]</td>
     <td>$comanda[id_comanda]</td>
-    <td>$comanda[valoare]</td>";
-    if($comanda['confirmare']==1)
-    $element.='<td> confirmata </td>';
-    else
-    $element.='<td> in procesare </td>';
-  
+    <td>$comanda[valoare]</td>
+    <td>$comanda[confirmare]</td>
+    <td>$comanda[data]</td>
+    ";
   echo $element;
-  
-  
+
 }
+
+function dateProduse($produs){
+  $element="
+  <form action=\"produse.php?id=$produs[id_produs]\" method=\"post\">
+  <tr>
+   <td>$produs[nume]</td>
+   <td>$produs[pret]</td>
+   <td>$produs[stoc]</td>
+   <td>$produs[id_cat]</td>
+   <td>$produs[imagine]</td>
+   <td><button type=\"submit\" class=\"btn red\" name=\"remove\">Stergere</button></td>
+   </tr>
+   </form>
+  ";
+  echo $element;
+
+}
+
+function dateCat($categorie)
+{
+  $element="
+  <form action=\"categorie.php?id=$categorie[id_cat]\" method=\"post\">
+  <tr>
+   <td>$categorie[nume]</td>
+   <td><button type=\"submit\" class=\"btn red\" name=\"remove\">Stergere</button></td>
+   
+   </tr>
+   </form>
+  ";
+  echo $element;
+}
+
 function dateProd($nume,$pret,$cantitatea){
   $sum=$cantitatea*$pret;
   $element="

@@ -4,10 +4,6 @@
 body {
   font-family: 'Rubik', 'Abel', 'Source Serif Pro', 'Overpass', 'Cairo',sans-serif;
   margin:auto;
-  background-image: url(photo/photo3.jpg);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
   max-width: 1000px;
 }
 
@@ -97,6 +93,7 @@ font-family: 'Cairo',sans-serif;
   font-size: 16px;
   text-align: justify;
   box-shadow: 1px 1px 5px grey;
+  min-height: 300px;
  
 }
 table{
@@ -275,7 +272,7 @@ padding: 2px 5px;
   color: black;
 }
 
-.btn.wrong {
+.btn.red {
   background-color:red;
 }
 
@@ -339,15 +336,15 @@ input[type=password] {
   box-sizing: border-box;
 }
 input[type=submit] {
- 
   background-color: rgb(72, 143, 236);
   color: white;
-  font-size: 14px;
+  font-size: 38px;
   padding: 10px 10px;
-  margin: 8px 0;
+  margin: 8px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  float: left;
 }
 .current {
   background-color:rgb(204, 204, 204); 

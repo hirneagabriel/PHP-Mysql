@@ -13,7 +13,13 @@ if (isset($_POST['remove'])){
 if (isset($_POST['update'])){
   foreach ($_SESSION['cart'] as $key => $value){
     if($value["product_id"] == $_GET['id']){
-      $_SESSION['cart'][$key]['count']=$_POST['cantitate'];
+      $id=$_GET['id'];
+      $sql= "SELECT * FROM produs where id_produs=$id";
+      $result=mysqli_query($mysqli,$sql);
+      $produs= mysqli_fetch_assoc($result);
+      if($produs['stoc']>=$_POST['cantitate'])
+          {$_SESSION['cart'][$key]['count']=$_POST['cantitate'];}
+          else {echo 'Ceva nu a mers bine';}
     }
 }
 }
@@ -39,7 +45,7 @@ if (isset($_POST['update'])){
       foreach ($_SESSION['cart'] as $key => $value){
       
         $product=getProdus($value["product_id"]);
-        elementeCos($product['imagine'],$product['nume'],$product['pret'],$product['id_produs'],$value["count"]);
+        elementeCos($product['imagine'],$product['nume'],$product['pret'],$product['id_produs'],$value["count"],$product['stoc']);
         $total=$total+$value["count"]*$product["pret"];
       }
       $_SESSION['total']=$total+15;

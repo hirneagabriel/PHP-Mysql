@@ -14,6 +14,5 @@
           echo "<span style=\"font-weight:bold; color:red;\" > 0 </span>";
         }
          ?></a>
-        <a href="cautare.php">Cautare avansata</a>
         <a href="about.php" class="right">About us</a>
       </nav>
